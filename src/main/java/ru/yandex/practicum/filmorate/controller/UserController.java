@@ -31,7 +31,7 @@ public class UserController {
             userFieldsValidate(user);
             user.setId(getNextId());
             users.put(user.getId(), user);
-            log.info("Создан user, id"+user.getId()+"   "+ user);
+            log.info("Создан user " + user.getLogin()+" id"+user.getId()+"   "+ user);
             return user;
         }
         catch (ValidationException e){

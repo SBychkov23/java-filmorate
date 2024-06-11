@@ -10,7 +10,6 @@ import java.util.Date;
 
 @Data
 @EqualsAndHashCode(of = { "email" })
-@AllArgsConstructor
 public class User {
     private Integer id;
     private String username;
