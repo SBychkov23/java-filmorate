@@ -54,7 +54,7 @@ public class UserControllerTest {
         try {
             testUserController.create(testUser4);
         } catch (Exception e) {
-            assertEquals("Имя login может быть пустым", e.getMessage());
+            assertEquals("login не может быть пустым", e.getMessage());
         }
         try {
             testUserController.create(testUser5);
