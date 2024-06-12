@@ -3,8 +3,6 @@ import ru.yandex.practicum.filmorate.controller.FilmController;
 import ru.yandex.practicum.filmorate.exceptions.ValidationException;
 import ru.yandex.practicum.filmorate.model.Film;
 
-import java.time.Duration;
-import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class FilmControllerTests {
@@ -12,15 +10,15 @@ public class FilmControllerTests {
     FilmController testFilmController = new FilmController();
 
     // тестовый фильм проходящий проверки
-    Film testFilm1 = new Film("testName", "testDesription", LocalDate.of(1999, 1, 1), Duration.ofMinutes(100));
+    Film testFilm1 = new Film("testName", "testDesription", "1999-01-01", 100);
     // тестовый фильм проходящий не проверку по полю имени
-    Film testFilm2 = new Film(" ", "testDesription", LocalDate.of(1999, 1, 1), Duration.ofMinutes(100));
+    Film testFilm2 = new Film(" ", "testDesription", "1999-01-01", 100);
     // тестовый фильм проходящий не проверку по полю даты
-    Film testFilm3 = new Film("testName", "testDesription", LocalDate.of(1799, 1, 1), Duration.ofMinutes(100));
+    Film testFilm3 = new Film("testName", "testDesription","1999-01-01", 100);
     // тестовый фильм проходящий не проверку по полю описания
-    Film testFilm4 = new Film("testName", org.apache.commons.lang3.StringUtils.repeat("*", 201), LocalDate.of(1799, 1, 1), Duration.ofMinutes(100));
+    Film testFilm4 = new Film("testName", org.apache.commons.lang3.StringUtils.repeat("*", 201), "1799-01-01", 100);
     // тестовый фильм проходящий не проверку по полю длительности
-    Film testFilm5 = new Film("testName", "testDesription", LocalDate.of(1999, 1, 1), Duration.ofMinutes(- 100));
+    Film testFilm5 = new Film("testName", "testDesription", "1999-01-01", -100);
 
     @Test
     public void creteFilms() throws ValidationException {

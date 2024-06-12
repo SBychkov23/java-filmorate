@@ -84,7 +84,7 @@ public class FilmController {
             if (LocalDate.parse(film.getReleaseDate()).isBefore(LocalDate.of(1895, 12, 28)) || (LocalDate.parse(film.getReleaseDate()).isAfter(LocalDate.ofInstant(Instant.now(), ZoneId.systemDefault()))))
                 throw new ValidationException("Указана некорректная дата релиза фильма");
         if (Optional.ofNullable(film.getDuration()).isPresent())
-            if (film.getDuration()<=0)
+            if (film.getDuration() <= 0)
                 throw new ValidationException("Длительность должна быть положительным числом");
     }
 

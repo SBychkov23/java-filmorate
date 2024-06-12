@@ -33,8 +33,7 @@ public class UserController {
             if (Optional.ofNullable(user.getName()).isPresent()) {
                 if (user.getName().isBlank())
                     user.setName(user.getLogin());
-            }
-            else user.setName(user.getLogin());
+            } else user.setName(user.getLogin());
             users.put(user.getId(), user);
             log.info("Создан user " + user.getLogin() + " id" + user.getId() + "   " + user);
             return user;
