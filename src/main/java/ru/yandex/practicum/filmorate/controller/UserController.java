@@ -30,6 +30,11 @@ public class UserController {
         try {
             userFieldsValidate(user);
             user.setId(getNextId());
+            if (Optional.ofNullable(user.getName()).isPresent()) {
+                if (user.getName().isBlank())
+                    user.setName(user.getLogin());
+            }
+            else user.setName(user.getLogin());
             users.put(user.getId(), user);
             log.info("Создан user " + user.getLogin() + " id" + user.getId() + "   " + user);
             return user;
@@ -50,12 +55,8 @@ public class UserController {
             User oldUser = users.get(newUser.getId());
             try {
                 userFieldsValidate(newUser);
+                oldUser.setName(newUser.getName());
                 oldUser.setLogin(newUser.getLogin());
-                if (Optional.ofNullable(newUser.getUsername()).isPresent()) {
-                    if (!newUser.getUsername().isBlank())
-                        oldUser.setUsername((newUser.getUsername()));
-                } else
-                    oldUser.setUsername(newUser.getLogin());
                 oldUser.setBirthday(newUser.getBirthday());
                 oldUser.setEmail(newUser.getEmail());
                 log.info("Обновлен film, id" + oldUser.getId() + "   " + oldUser);
@@ -85,7 +86,7 @@ public class UserController {
         else if (!user.getEmail().contains("@"))
             throw new ValidationException("email должен содержать знак @");
         if (!Optional.ofNullable(user.getLogin()).isPresent())
-            throw new ValidationException("Имя login может быть пустым");
+            throw new ValidationException("login не может быть пустым");
         else if (user.getLogin().contains(" "))
             throw new ValidationException("login не может содержать пробелы");
         if (Optional.ofNullable(user.getBirthday()).isPresent())

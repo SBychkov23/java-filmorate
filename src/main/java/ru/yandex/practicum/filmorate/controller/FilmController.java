@@ -81,12 +81,11 @@ public class FilmController {
             if (film.getName().isBlank())
                 throw new ValidationException("Имя не может быть пустым");
         if (Optional.ofNullable(film.getReleaseDate()).isPresent())
-            if (film.getReleaseDate().isBefore(LocalDate.of(1885, 12, 28)) || film.getReleaseDate().isAfter(LocalDate.ofInstant(Instant.now(), ZoneId.systemDefault())))
+            if (LocalDate.parse(film.getReleaseDate()).isBefore(LocalDate.of(1895, 12, 28)) || (LocalDate.parse(film.getReleaseDate()).isAfter(LocalDate.ofInstant(Instant.now(), ZoneId.systemDefault()))))
                 throw new ValidationException("Указана некорректная дата релиза фильма");
-        if (!Optional.ofNullable(film.getDuration()).isPresent())
-            if (film.getDuration().isNegative())
+        if (Optional.ofNullable(film.getDuration()).isPresent())
+            if (film.getDuration()<=0)
                 throw new ValidationException("Длительность должна быть положительным числом");
-
     }
 
     // служебный метод, возвращающий размер мапы фильмов:

@@ -17,10 +17,10 @@ public class Film {
     Integer id;
     String name;
     String description;
-    LocalDate releaseDate;
-    Duration duration;
+    String releaseDate;
+    long duration;
 
-    public Film(String name, String description, LocalDate releaseDate, Duration duration) {
+    public Film(String name, String description, String releaseDate, long duration) {
         this.name = name;
         this.description = description;
         this.releaseDate = releaseDate;

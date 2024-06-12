@@ -13,13 +13,13 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class User {
      Integer id;
-     String username;
+     String name;
      String email;
      String login;
      LocalDate birthday;
 
     public User(String username, String email, String login, LocalDate birthday) {
-        this.username = username;
+        this.name = username;
         this.email = email;
         this.login = login;
         this.birthday = birthday;
