@@ -1,21 +1,23 @@
 package ru.yandex.practicum.filmorate.model;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Data
 @EqualsAndHashCode(of = { "email" })
+@FieldDefaults(makeFinal = false, level = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
-    private Integer id;
-    private String username;
-    private String email;
-    private String login;
-    private LocalDate birthday;
+     Integer id;
+     String username;
+     String email;
+     String login;
+     LocalDate birthday;
+
     public User(String username, String email, String login, LocalDate birthday) {
         this.username = username;
         this.email = email;

@@ -1,7 +1,7 @@
 package ru.yandex.practicum.filmorate.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.time.Duration;
 import java.time.LocalDate;
@@ -10,12 +10,15 @@ import java.time.LocalDate;
  * Film.
  */
 @Data
+@FieldDefaults(makeFinal = false, level = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
 public class Film {
-    private Integer id;
-    private String name;
-    private String description;
-    private LocalDate releaseDate;
-    private Duration duration;
+    Integer id;
+    String name;
+    String description;
+    LocalDate releaseDate;
+    Duration duration;
 
     public Film(String name, String description, LocalDate releaseDate, Duration duration) {
         this.name = name;

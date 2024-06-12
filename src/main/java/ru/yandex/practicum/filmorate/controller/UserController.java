@@ -31,10 +31,10 @@ public class UserController {
             userFieldsValidate(user);
             user.setId(getNextId());
             users.put(user.getId(), user);
-            log.info("Создан user " + user.getLogin()+" id"+user.getId()+"   "+ user);
+            log.info("Создан user " + user.getLogin() + " id" + user.getId() + "   " + user);
             return user;
-        }
-        catch (ValidationException e){
+        } catch (ValidationException e) {
+            log.error(e.getMessage());
             throw e;
         }
     }
@@ -43,6 +43,7 @@ public class UserController {
     public User update(@RequestBody User newUser) throws ValidationException {
         // проверяем необходимые условия
         if (Optional.ofNullable(newUser.getId()).isEmpty()) {
+            log.error("Id должен быть указан");
             throw new ValidationException("Id должен быть указан");
         }
         if (users.containsKey(newUser.getId())) {
@@ -50,22 +51,23 @@ public class UserController {
             try {
                 userFieldsValidate(newUser);
                 oldUser.setLogin(newUser.getLogin());
-                if(Optional.ofNullable(newUser.getUsername()).isPresent()) {
+                if (Optional.ofNullable(newUser.getUsername()).isPresent()) {
                     if (!newUser.getUsername().isBlank())
                         oldUser.setUsername((newUser.getUsername()));
-                }
-                else oldUser.setUsername(newUser.getLogin());
+                } else
+                    oldUser.setUsername(newUser.getLogin());
                 oldUser.setBirthday(newUser.getBirthday());
                 oldUser.setEmail(newUser.getEmail());
-                log.info("Обновлен film, id"+oldUser.getId()+"   "+ oldUser);
+                log.info("Обновлен film, id" + oldUser.getId() + "   " + oldUser);
                 return oldUser;
-            }
-            catch (ValidationException e){
+            } catch (ValidationException e) {
+                log.error(e.getMessage());
                 throw e;
             }
         }
         throw new ValidationException("Фильм с id = " + newUser.getId() + " не найден");
     }
+
     // вспомогательный метод для генерации идентификатора нового фильма
     private int getNextId() {
         int currentMaxId = users.keySet()
@@ -75,6 +77,7 @@ public class UserController {
                 .orElse(0);
         return ++currentMaxId;
     }
+
     // вспомогательный метод для валидации данны фильма
     private void userFieldsValidate(User user) throws ValidationException {
         if (!Optional.ofNullable(user.getEmail()).isPresent())
@@ -89,6 +92,7 @@ public class UserController {
             if (user.getBirthday().isAfter(LocalDate.ofInstant(Instant.now(), ZoneId.systemDefault())))
                 throw new ValidationException("Указана некорректная дата рождения: дата не может быть позже текущего момента времени");
     }
+
     // служебный метод, возвращающий размер мапы пользователей:
     public int getUsersMapLen() {
         return users.size();
