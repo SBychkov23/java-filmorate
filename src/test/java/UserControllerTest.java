@@ -1,9 +1,12 @@
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
+import org.springframework.beans.factory.annotation.Autowired;
 import ru.yandex.practicum.filmorate.controller.UserController;
 import ru.yandex.practicum.filmorate.exceptions.ValidationException;
 import ru.yandex.practicum.filmorate.model.User;
+import ru.yandex.practicum.filmorate.storage.InMemoryUserStorage;
+import ru.yandex.practicum.filmorate.storage.UserStorage;
 
 import java.time.LocalDate;
 
@@ -12,7 +15,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @TestInstance(Lifecycle.PER_CLASS)
 public class UserControllerTest {
 
-    static UserController testUserController = new UserController();
+    
+    static InMemoryUserStorage inMemoryUserStorage = new InMemoryUserStorage();
 
     //тестовый юзер проходящий проверки
     static User testUser1 = new User("testName", "test@email", "testLogin", LocalDate.of(1999, 01, 01));
@@ -30,39 +34,39 @@ public class UserControllerTest {
 
     @Test
     public void usersCreate() throws ValidationException {
-        testUserController.create(testUser1);
+        inMemoryUserStorage.addUser(testUser1);
         try {
-            testUserController.create(testUser2);
+            inMemoryUserStorage.addUser(testUser2);
         } catch (Exception e) {
             assertEquals(e.getClass(), ValidationException.class);
         }
-        assertEquals(1, testUserController.findAll().size());
+        assertEquals(1, inMemoryUserStorage.getAllUsers().size());
     }
 
     @Test
     public void badDataFillWhileCreate() {
         try {
-            testUserController.create(testUser2);
+            inMemoryUserStorage.addUser(testUser2);
         } catch (Exception e) {
             assertEquals("email должен содержать знак @", e.getMessage());
         }
         try {
-            testUserController.create(testUser3);
+            inMemoryUserStorage.addUser(testUser3);
         } catch (Exception e) {
             assertEquals("Указана некорректная дата рождения: дата не может быть позже текущего момента времени", e.getMessage());
         }
         try {
-            testUserController.create(testUser4);
+            inMemoryUserStorage.addUser(testUser4);
         } catch (Exception e) {
             assertEquals("login не может быть пустым", e.getMessage());
         }
         try {
-            testUserController.create(testUser5);
+            inMemoryUserStorage.addUser(testUser5);
         } catch (Exception e) {
             assertEquals("login не может содержать пробелы", e.getMessage());
         }
         try {
-            testUserController.create(testUser6);
+            inMemoryUserStorage.addUser(testUser6);
         } catch (Exception e) {
             assertEquals("Поле email не может быть пустым", e.getMessage());
         }
@@ -71,7 +75,7 @@ public class UserControllerTest {
     @Test
     public void badDataFillWhileUpdate() {
         try {
-            testUserController.update(testUser2);
+            inMemoryUserStorage.modifyUser(testUser2);
         } catch (Exception e) {
             assertEquals("Id должен быть указан", e.getMessage());
         }
