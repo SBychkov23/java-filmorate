@@ -23,7 +23,7 @@ public class FilmControllerTests {
     @Test
     public void creteFilms() throws ValidationException {
         testFilmController.create(testFilm1);
-        assertEquals(1, testFilmController.getFilmsMapLen());
+        assertEquals(1, testFilmController.findAll().size());
         try {
             testFilmController.create(testFilm2);
         } catch (Exception e) {

@@ -36,7 +36,7 @@ public class UserControllerTest {
         } catch (Exception e) {
             assertEquals(e.getClass(), ValidationException.class);
         }
-        assertEquals(1, testUserController.getUsersMapLen());
+        assertEquals(1, testUserController.findAll().size());
     }
 
     @Test
