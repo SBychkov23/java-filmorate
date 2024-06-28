@@ -1,12 +1,9 @@
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
-import org.springframework.beans.factory.annotation.Autowired;
-import ru.yandex.practicum.filmorate.controller.UserController;
 import ru.yandex.practicum.filmorate.exceptions.ValidationException;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.InMemoryUserStorage;
-import ru.yandex.practicum.filmorate.storage.UserStorage;
 
 import java.time.LocalDate;
 
@@ -15,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @TestInstance(Lifecycle.PER_CLASS)
 public class UserControllerTest {
 
-    
+
     static InMemoryUserStorage inMemoryUserStorage = new InMemoryUserStorage();
 
     //тестовый юзер проходящий проверки
